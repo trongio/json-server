@@ -1,13 +1,22 @@
 import { createApp } from "./lib/app.js";
 import dbJson from "./fixtures/db.json" with { type: "json" };
-import { Low, Memory } from 'lowdb'
-// Define options for the app
+import { Low, Memory } from 'lowdb';
+import fs from 'fs';
+import path from 'path';
 
+// Define options for the app
 const options = {
     static: ["public"], // Serve static files from the "public" directory
 };
-const adapter = new Memory(dbJson)
-const db = new Low(adapter, dbJson)
+
+// Ensure the public directory exists
+const publicDir = path.resolve('public');
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+}
+
+const adapter = new Memory(dbJson);
+const db = new Low(adapter, dbJson);
 
 // Create the app instance
 const server = createApp(db, options);
