@@ -1,5 +1,5 @@
 import { createApp } from "./lib/app.js";
-import dbJson from "./fixtures/db.json" wit;
+import dbJson from "./fixtures/db.json" with { type: "json" };
 import { Low, Memory } from 'lowdb'
 // Define options for the app
 
@@ -14,8 +14,9 @@ const server = createApp(db, options);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || 'localhost';
 server.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-});
+    console.log(`Server is running at http://${HOST}:${PORT}`);
+}, HOST);
 
 export default server;
