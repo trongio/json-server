@@ -246,6 +246,8 @@ export class Service {
       conds.push([key, Condition.default, value])
     }
 
+    console.log(conds)
+
 // Filter items
     let filtered = items
     for (const [key, op, paramValue] of conds) {
@@ -253,11 +255,16 @@ export class Service {
         const itemValue = getProperty(item, key)
 
         // Handle "LIKE" condition
-        if (op === Condition.like && Array.isArray(paramValue)) {
-          return paramValue.some((pattern) => {
-            const regex = new RegExp(`^${pattern.replace(/%/g, '.*')}$`, 'i')
-            return regex.test(String(itemValue))
-          })
+        if (Array.isArray(paramValue)) {
+          if (op === Condition.like) {
+            return paramValue.some((pattern) => {
+              const regex = new RegExp(`^${pattern.replace(/%/g, '.*')}$`, 'i')
+              return regex.test(String(itemValue))
+            })
+          }
+          if (op === Condition.in) {
+            return paramValue.includes(String(itemValue))
+          }
         }
 
         // Handle other conditions
