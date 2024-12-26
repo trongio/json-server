@@ -21,7 +21,7 @@
     "lint": "eslint src",
     "prepare": "husky && npm run build",
     "prepublishOnly": "npm run build",
-    "start": "node server.js"
+    "start": "npm run build && node server.js"
   },
   "keywords": [],
   "author": "typicode <typicode@gmail.com>",
