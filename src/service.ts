@@ -246,7 +246,6 @@ export class Service {
       conds.push([key, Condition.default, value])
     }
 
-    console.log(conds)
 
 // Filter items
     let filtered = items
@@ -263,7 +262,7 @@ export class Service {
             })
           }
           if (op === Condition.in) {
-            return paramValue.includes(String(itemValue))
+            return String(paramValue).toLowerCase().includes(String(itemValue).toLowerCase())
           }
         }
 
